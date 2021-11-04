@@ -11,7 +11,4 @@ This is the sample node.js with mongodb. It contains some code for me to refer w
 3. Change your .env variables
 4. Run **nodemon index.js**
 
-## Todo
-- 
-
 Feel free to contact me at chern-97@hotmail.com
