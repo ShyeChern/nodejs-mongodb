@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// initialize database
 module.exports.init = async () => {
 	try {
 		const database = await mongoose.connect(process.env.MONGODB_URL);
@@ -10,4 +11,5 @@ module.exports.init = async () => {
 	}
 };
 
+// for transaction query
 module.exports.conn = mongoose.createConnection(process.env.MONGODB_URL);
