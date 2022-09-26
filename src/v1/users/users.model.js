@@ -16,6 +16,12 @@ const userSchema = new Schema(
 	{ timestamps: true }
 );
 
+userSchema.virtual('virtualPopulate', {
+	ref: 'Product',
+	localField: 'createdAt',
+	foreignField: 'createdAt',
+});
+
 // can create own method that will be reuse multiple times
 userSchema.statics.findUserDetail = function (data) {
 	let user = this.findOne({ username: data.username }).lean();

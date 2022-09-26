@@ -13,6 +13,7 @@ module.exports.getUser = async (req, res, next) => {
 			.find(find)
 			.select('-__v')
 			.populate('products', 'products')
+			.populate('virtualPopulate')
 			.skip(skip)
 			.limit(limit)
 			.lean();
