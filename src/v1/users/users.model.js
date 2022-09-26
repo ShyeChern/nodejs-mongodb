@@ -20,6 +20,7 @@ userSchema.virtual('virtualPopulate', {
 	ref: 'Product',
 	localField: 'createdAt',
 	foreignField: 'createdAt',
+	justOne: true,
 });
 
 // can create own method that will be reuse multiple times
