@@ -6,8 +6,9 @@ const products = require('./v1/products/products.controller');
 
 router.route('/users').get(users.getUser);
 router.route('/users').post(users.addUser);
-router.route('/products/add').put(products.addProduct);
-router.route('/products/remove').put(products.removeProduct);
+router.route('/users/:username').delete(users.deleteUser);
+router.route('/products/:productId/add').put(products.addProduct);
+router.route('/products/:productId/remove').put(products.removeProduct);
 
 module.exports.setRoutes = (app) => {
 	app.use('/api/v1', router);

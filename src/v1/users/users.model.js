@@ -24,11 +24,23 @@ userSchema.virtual('virtualPopulate', {
 });
 
 // can create own method that will be reuse multiple times
-userSchema.statics.findUserDetail = function (data) {
-	let user = this.findOne({ username: data.username }).lean();
-	let userPopulateProduct = this.findOne({ username: data.username }).populate('products').lean();
-
-	return Promise.all([user, userPopulateProduct]);
+userSchema.statics.findUserDetail = async function (data) {
+	// aggregate will not transform the data (if any)
+	const result = await this.aggregate([
+		{ $match: { username: data.username } },
+		{
+			$lookup: {
+				from: 'products',
+				localField: 'products',
+				foreignField: '_id',
+				as: 'products',
+			},
+		},
+		{ $project: { __v: 0, 'products.__v': 0 } },
+		{ $unwind: { path: '$products', preserveNullAndEmptyArrays: true } }, // deconstruct into object
+	]);
+	// aggregate always return in array
+	return result[0];
 };
 
 module.exports = mongoose.model('User', userSchema);

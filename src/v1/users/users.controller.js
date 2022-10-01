@@ -12,7 +12,7 @@ module.exports.getUser = async (req, res, next) => {
 		const users = await userModel
 			.find(find)
 			.select('-__v')
-			.populate('products', 'products')
+			.populate('products', 'items')
 			.populate('virtualPopulate')
 			.skip(skip)
 			.limit(limit)
@@ -40,11 +40,28 @@ module.exports.addUser = async (req, res, next) => {
 		});
 
 		// same data with above transaction
-		const [user, userPopulateProduct] = await userModel.findUserDetail({
+		const user = await userModel.findUserDetail({
 			username: req.body.username,
 		});
 
-		res.send({ user, userPopulateProduct });
+		res.send({ ...user });
+	} catch (err) {
+		return next(err);
+	}
+};
+
+module.exports.deleteUser = async (req, res, next) => {
+	try {
+		await conn.transaction(async (session) => {
+			const user = await userModel.findOne({ username: req.params.username });
+			if (!user) {
+				throw new UserError(UserError.USERNAME_NOT_FOUND);
+			}
+			await userModel.deleteOne({ _id: user._id }, session);
+			await productModel.deleteOne({ _id: user.products }, session);
+		});
+
+		res.send({ message: 'Delete user successfully' });
 	} catch (err) {
 		return next(err);
 	}

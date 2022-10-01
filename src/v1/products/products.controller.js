@@ -9,13 +9,13 @@ module.exports.addProduct = async (req, res, next) => {
 		await conn.transaction(async (session) => {
 			// remove duplicate product
 			await productModel.findOneAndUpdate(
-				{ _id: mongoose.Types.ObjectId(req.body.productId) },
-				{ $pull: { products: { name: req.body.name } } },
+				{ _id: mongoose.Types.ObjectId(req.params.productId) },
+				{ $pull: { items: { name: req.body.name } } },
 				{ session }
 			);
 			product = await productModel.findOneAndUpdate(
-				{ _id: mongoose.Types.ObjectId(req.body.productId) },
-				{ $push: { products: { name: req.body.name, quantity: req.body.quantity } } },
+				{ _id: mongoose.Types.ObjectId(req.params.productId) },
+				{ $push: { items: { name: req.body.name, quantity: req.body.quantity } } },
 				{ new: true, session }
 			);
 		});
@@ -29,8 +29,8 @@ module.exports.addProduct = async (req, res, next) => {
 module.exports.removeProduct = async (req, res, next) => {
 	try {
 		let product = await productModel.findOneAndUpdate(
-			{ _id: mongoose.Types.ObjectId(req.body.productId) },
-			{ $pull: { products: { name: req.body.name } } },
+			{ _id: mongoose.Types.ObjectId(req.params.productId) },
+			{ $pull: { items: { name: req.body.name } } },
 			{ new: true }
 		);
 

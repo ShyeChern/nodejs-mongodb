@@ -2,6 +2,7 @@ const ErrorMessage = {
 	404: 'The requested resource is not found',
 	500: 'Internal server error, please try again later. If this error persist please contact our support.',
 	10001: 'Username exist.',
+	10002: 'Username not found.',
 };
 
 /**
@@ -27,6 +28,7 @@ class UserError extends Error {
 
 UserError.NOT_FOUND = 404;
 UserError.USERNAME_EXIST = 10001;
+UserError.USERNAME_NOT_FOUND = 10002;
 
 module.exports = {
 	UserError,
