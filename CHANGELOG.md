@@ -1,4 +1,10 @@
 # CHANGELOG
+## v1.0.2 (2022-02-25)
+### Feature
+* Add $addFields in aggregate pipeline with $switch case
+### Misc
+* Add price in product item
+
 ## v1.0.1 (2022-10-01)
 ### Feature
 * Add delete user endpoint

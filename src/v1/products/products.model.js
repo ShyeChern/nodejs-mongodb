@@ -16,6 +16,11 @@ const productSchema = new Schema(
 						required: true,
 						min: 1,
 					},
+					price: {
+						type: mongoose.Types.Decimal128,
+						required: true,
+						min: 1,
+					},
 					orderTime: {
 						type: Date,
 						default: new Date(),

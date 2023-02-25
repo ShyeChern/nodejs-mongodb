@@ -15,7 +15,15 @@ module.exports.addProduct = async (req, res, next) => {
 			);
 			product = await productModel.findOneAndUpdate(
 				{ _id: mongoose.Types.ObjectId(req.params.productId) },
-				{ $push: { items: { name: req.body.name, quantity: req.body.quantity } } },
+				{
+					$push: {
+						items: {
+							name: req.body.name,
+							quantity: req.body.quantity,
+							price: Math.floor(Math.random() * 10) + 1,
+						},
+					},
+				},
 				{ new: true, session }
 			);
 		});

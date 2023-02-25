@@ -38,6 +38,26 @@ userSchema.statics.findUserDetail = async function (data) {
 		},
 		{ $project: { __v: 0, 'products.__v': 0 } },
 		{ $unwind: { path: '$products', preserveNullAndEmptyArrays: true } }, // deconstruct into object
+		{
+			// add extra field (added field can be filter in $match)
+			$addFields: {
+				dummyField: {
+					$switch: {
+						branches: [
+							{
+								case: { $eq: ['$username', 'test3'] },
+								then: { $concat: ['VVIP', ' - ', '$username'] },
+							},
+							{
+								case: { $eq: ['$username', 'test4'] },
+								then: { $concat: ['VVVIP', ' - ', '$username'] },
+							},
+						],
+						default: 'VIP - $username',
+					},
+				},
+			},
+		},
 	]);
 	// aggregate always return in array
 	return result[0];
