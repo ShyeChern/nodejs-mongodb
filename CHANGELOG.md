@@ -1,4 +1,9 @@
 # CHANGELOG
+
+## v1.0.4 (2023-05-28)
+### Fix
+* Fix delete user session option
+
 ## v1.0.3 (2023-05-28)
 ### Feature
 * Add $group in aggregate with derived field

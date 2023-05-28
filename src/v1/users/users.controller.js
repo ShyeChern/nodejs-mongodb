@@ -57,8 +57,8 @@ module.exports.deleteUser = async (req, res, next) => {
 			if (!user) {
 				throw new UserError(UserError.USERNAME_NOT_FOUND);
 			}
-			await userModel.deleteOne({ _id: user._id }, session);
-			await productModel.deleteOne({ _id: user.products }, session);
+			await userModel.deleteOne({ _id: user._id }, { session });
+			await productModel.deleteOne({ _id: user.products }, { session });
 		});
 
 		res.send({ message: 'Delete user successfully' });
