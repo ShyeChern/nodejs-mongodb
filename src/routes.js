@@ -9,6 +9,7 @@ router.route('/users').post(users.addUser);
 router.route('/users/:username').delete(users.deleteUser);
 router.route('/products/:productId/add').put(products.addProduct);
 router.route('/products/:productId/remove').put(products.removeProduct);
+router.route('/products/summary').get(products.summary);
 
 module.exports.setRoutes = (app) => {
 	app.use('/api/v1', router);

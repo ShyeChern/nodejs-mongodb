@@ -1,5 +1,9 @@
 # CHANGELOG
-## v1.0.2 (2022-02-25)
+## v1.0.3 (2023-05-28)
+### Feature
+* Add $group in aggregate with derived field
+
+## v1.0.2 (2023-02-25)
 ### Feature
 * Add $addFields in aggregate pipeline with $switch case
 ### Misc

@@ -47,3 +47,31 @@ module.exports.removeProduct = async (req, res, next) => {
 		return next(err);
 	}
 };
+
+module.exports.summary = async (req, res, next) => {
+	try {
+		const result = await productModel.aggregate([
+			{
+				$group: {
+					_id: null,
+					totalProductsWithItem1: {
+						$sum: {
+							$size: {
+								$filter: { input: '$items', as: 'item', cond: { $eq: ['$$item.name', 'item1'] } },
+							},
+						},
+					},
+					productsWithMoreThanOneItem: {
+						$sum: {
+							$cond: { if: { $gt: [{ $size: '$items' }, 1] }, then: 1, else: 0 },
+						},
+					},
+				},
+			},
+		]);
+
+		res.send(result);
+	} catch (err) {
+		return next(err);
+	}
+};
